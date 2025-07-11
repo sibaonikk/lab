@@ -9,7 +9,16 @@
 
 <body>
     <h1>This is a hacking lab</h1>
-    <input type="text">
+    <input type="text" id="userInput" placeholder="Type some payloads">
+    <button onclick="showInput()">Submit</button>
+
+    <p id="output"></p>
+    <script>
+        function showInput() {
+            const input = document.getElementById('userInput').value;
+            document.getElementById('output').innerText = `You typed: ${input}`;
+        }
+    </script>
 </body>
 
 </html>
