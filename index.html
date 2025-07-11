@@ -3,17 +3,29 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pinterest Clone</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pinterest Clone Dark Background Only</title>
     <style>
+        :root {
+            --bg-color: #f5f5f5;
+        }
+
+        body.dark {
+            --bg-color: #121212;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
+            color: #222;
+            /* fixed text color */
         }
 
         .header {
             background-color: #e60023;
+            /* always red */
             color: white;
             padding: 12px 20px;
             display: flex;
@@ -45,6 +57,10 @@
             border-radius: 24px;
             border: none;
             font-size: 16px;
+            background-color: white;
+            /* always white */
+            color: #222;
+            /* always dark text */
         }
 
         .grid {
@@ -73,12 +89,14 @@
 
         .card {
             background-color: white;
+            /* always white */
             display: inline-block;
             margin-bottom: 1em;
             width: 100%;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* always same */
             break-inside: avoid;
         }
 
@@ -90,6 +108,25 @@
         .card-title {
             padding: 10px;
             font-size: 14px;
+            color: #222;
+            /* always dark text */
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            border-radius: 24px;
+            padding: 6px 14px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            user-select: none;
+        }
+
+        .toggle-btn:hover {
+            background-color: white;
+            color: #e60023;
         }
     </style>
 </head>
@@ -103,6 +140,7 @@
                 <input type="text" id="searchInput" placeholder="Search photos...">
             </div>
         </div>
+        <button class="toggle-btn" id="darkToggle">🌙 Dark Background</button>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -119,6 +157,8 @@
 
         const grid = document.getElementById('grid');
         const searchInput = document.getElementById('searchInput');
+        const darkToggle = document.getElementById('darkToggle');
+        const body = document.body;
 
         function renderImages(filter = '') {
             grid.innerHTML = '';
@@ -145,12 +185,37 @@
             });
         }
 
+        // Load theme from localStorage or default to light
+        function loadTheme() {
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'enabled') {
+                body.classList.add('dark');
+                darkToggle.textContent = '☀️ Light Background';
+            } else {
+                body.classList.remove('dark');
+                darkToggle.textContent = '🌙 Dark Background';
+            }
+        }
+
+        darkToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkToggle.textContent = '☀️ Light Background';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkToggle.textContent = '🌙 Dark Background';
+            }
+        });
+
         renderImages();
+        loadTheme();
 
         searchInput.addEventListener('input', (e) => {
             renderImages(e.target.value);
         });
     </script>
+
 </body>
 
 </html>
