@@ -140,7 +140,7 @@
                 <input type="text" id="searchInput" placeholder="Search photos...">
             </div>
         </div>
-        <button class="toggle-btn" id="darkToggle">🌙 Dark Background</button>
+        <button class="toggle-btn" id="darkToggle">🌙 Dark</button>
     </div>
 
     <div class="grid" id="grid"></div>
@@ -201,10 +201,10 @@
             body.classList.toggle('dark');
             if (body.classList.contains('dark')) {
                 localStorage.setItem('darkMode', 'enabled');
-                darkToggle.textContent = '☀️ Light Background';
+                darkToggle.textContent = '☀️ Light';
             } else {
                 localStorage.setItem('darkMode', 'disabled');
-                darkToggle.textContent = '🌙 Dark Background';
+                darkToggle.textContent = '🌙 Dark';
             }
         });
 
